@@ -248,6 +248,27 @@
                 this._div.innerHTML = '<h2>Visor giras de campo EIT-UCR</h2>';
             };
             title.addTo(map);
+            var abstract = new L.Control({'position':'topright'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control leaflet-bar abstract');
+                this._div.id = "abstract"
+                this._div.setAttribute("onmouseenter", "abstract.show()");
+                this._div.setAttribute("onmouseleave", "abstract.hide()");
+                this.hide();
+                return this._div;
+            };
+            abstract.hide = function () {
+                this._div.classList.remove("abstractUncollapsed");
+                this._div.classList.add("abstract");
+                this._div.innerHTML = 'i'
+            }
+            abstract.show = function () {
+                this._div.classList.remove("abstract");
+                this._div.classList.add("abstractUncollapsed");
+                this._div.innerHTML = 'Visor de giras de campo de la Escuela de Ingeniería Topográfica de la Universidad de Costa Rica<br />Trabajo Final de Graduación<br />Maestría Profesional en Sistemas de Información Geográficos y Teledetección<br />Geografía<br />Universidad de Costa Rica<br />Universidad Nacional de Costa Rica<br />Promoción 2017-2019<br /><br />Objetivo General<br />Implementar la infraestructura necesaria para la creación de un Sistema de Información Geográfico, como herramienta de visualización del impacto la Escuela de Ingeniería Topográfica de la Universidad de Costa Rica en al ámbito Nacional.';
+            };
+            abstract.addTo(map);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
