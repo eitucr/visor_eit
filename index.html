@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
+		<link rel="stylesheet" href="css/barra.css">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
@@ -8,14 +9,12 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/MarkerCluster.css">
-        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         html, body, #map {
             width: 100%;
-            height: 100%;
+            height: 98.2%;
             padding: 0;
             margin: 0;
         }
@@ -23,6 +22,14 @@
         <title>Visor giras de campo EIT-UCR</title>
     </head>
     <body>
+	
+	<div class="topnav">
+		<a class="active" href="index.html">Home</a>
+		<a href="index1.html">Docencia</a>
+		<a href="index2.html">Investigación</a>
+		<a href="index3.html">Acción Social</a>
+	</div>
+
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -36,9 +43,13 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
-        <script src="js/leaflet.markercluster.js"></script>
-        <script src="data/2015_CRTM05_1.js"></script>
-        <script src="data/UCR_CRTM05_2.js"></script>
+        <script src="data/Rutas_AccinSocial_3.js"></script>
+        <script src="data/Giras_AccinSocial_4.js"></script>
+        <script src="data/Rutas_Investigacin_5.js"></script>
+        <script src="data/Giras_Investigacin_6.js"></script>
+        <script src="data/Rutas_Docencia_7.js"></script>
+        <script src="data/Giras_Docencia_8.js"></script>
+        <script src="data/UCR_9.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -56,8 +67,8 @@
             }
         }
         var map = L.map('map', {
-            zoomControl:true, maxZoom:17, minZoom:7
-        }).fitBounds([[7.900671468833701,-86.78905322313945],[11.28209269448081,-81.42050847408623]]);
+            zoomControl:true, maxZoom:19, minZoom:7
+        }).fitBounds([[7.412195732953402,-86.40124508616105],[11.260627316159576,-81.03315699301893]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
@@ -76,13 +87,23 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+        });
+        layer_GoogleSatellite_0;
+        var layer_GoogleRoad_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+        });
+        layer_GoogleRoad_1;
+        var layer_OSMStandard_2 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             opacity: 1.0,
             attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
         });
-        layer_OSMStandard_0;
-        map.addLayer(layer_OSMStandard_0);
-        function pop_2015_CRTM05_1(feature, layer) {
+        layer_OSMStandard_2;
+        map.addLayer(layer_OSMStandard_2);
+        function pop_Rutas_AccinSocial_3(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -136,51 +157,678 @@
                         <th scope="row">Curso</th>\
                         <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Km</th>\
+                        <td>' + (feature.properties['Km'] !== null ? Autolinker.link(String(feature.properties['Km'])) : '') + '</td>\
+                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_2015_CRTM05_1_0() {
+        function style_Rutas_AccinSocial_3_0(feature) {
+            switch(String(feature.properties['Año'])) {
+                case '2018':
+                    return {
+                pane: 'pane_Rutas_AccinSocial_3',
+                opacity: 1,
+                color: 'rgba(145,63,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2019':
+                    return {
+                pane: 'pane_Rutas_AccinSocial_3',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Rutas_AccinSocial_3');
+        map.getPane('pane_Rutas_AccinSocial_3').style.zIndex = 403;
+        map.getPane('pane_Rutas_AccinSocial_3').style['mix-blend-mode'] = 'normal';
+        var layer_Rutas_AccinSocial_3 = new L.geoJson(json_Rutas_AccinSocial_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rutas_AccinSocial_3',
+            layerName: 'layer_Rutas_AccinSocial_3',
+            pane: 'pane_Rutas_AccinSocial_3',
+            onEachFeature: pop_Rutas_AccinSocial_3,
+            style: style_Rutas_AccinSocial_3_0,
+        });
+        bounds_group.addLayer(layer_Rutas_AccinSocial_3);
+        map.addLayer(layer_Rutas_AccinSocial_3);
+        function pop_Giras_AccinSocial_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Id_Objeto</th>\
+                        <td>' + (feature.properties['Id_Objeto'] !== null ? Autolinker.link(String(feature.properties['Id_Objeto'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Año</th>\
+                        <td>' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Docente</th>\
+                        <td>' + (feature.properties['Docente'] !== null ? Autolinker.link(String(feature.properties['Docente'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Unidad</th>\
+                        <td>' + (feature.properties['Unidad'] !== null ? Autolinker.link(String(feature.properties['Unidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Salida</th>\
+                        <td>' + (feature.properties['Salida'] !== null ? Autolinker.link(String(feature.properties['Salida'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Regreso</th>\
+                        <td>' + (feature.properties['Regreso'] !== null ? Autolinker.link(String(feature.properties['Regreso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Destino</th>\
+                        <td>' + (feature.properties['Destino'] !== null ? Autolinker.link(String(feature.properties['Destino'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_Personas</th>\
+                        <td>' + (feature.properties['N_Personas'] !== null ? Autolinker.link(String(feature.properties['N_Personas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? Autolinker.link(String(feature.properties['Tipo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Curso</th>\
+                        <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Canton</th>\
+                        <td>' + (feature.properties['Canton'] !== null ? Autolinker.link(String(feature.properties['Canton'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Provincia</th>\
+                        <td>' + (feature.properties['Provincia'] !== null ? Autolinker.link(String(feature.properties['Provincia'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distrito</th>\
+                        <td>' + (feature.properties['Distrito'] !== null ? Autolinker.link(String(feature.properties['Distrito'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Giras_AccinSocial_4_0() {
             return {
-                pane: 'pane_2015_CRTM05_1',
+                pane: 'pane_Giras_AccinSocial_4',
                 radius: 8.0,
                 opacity: 1,
-                color: 'rgba(128,17,25,1.0)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 2.0,
+                weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(219,30,42,1.0)',
+                fillColor: 'rgba(255,0,0,1.0)',
                 interactive: true,
             }
         }
-        map.createPane('pane_2015_CRTM05_1');
-        map.getPane('pane_2015_CRTM05_1').style.zIndex = 401;
-        map.getPane('pane_2015_CRTM05_1').style['mix-blend-mode'] = 'normal';
-        var layer_2015_CRTM05_1 = new L.geoJson(json_2015_CRTM05_1, {
+        map.createPane('pane_Giras_AccinSocial_4');
+        map.getPane('pane_Giras_AccinSocial_4').style.zIndex = 404;
+        map.getPane('pane_Giras_AccinSocial_4').style['mix-blend-mode'] = 'normal';
+        var layer_Giras_AccinSocial_4 = new L.geoJson(json_Giras_AccinSocial_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_2015_CRTM05_1',
-            layerName: 'layer_2015_CRTM05_1',
-            pane: 'pane_2015_CRTM05_1',
-            onEachFeature: pop_2015_CRTM05_1,
+            dataVar: 'json_Giras_AccinSocial_4',
+            layerName: 'layer_Giras_AccinSocial_4',
+            pane: 'pane_Giras_AccinSocial_4',
+            onEachFeature: pop_Giras_AccinSocial_4,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_2015_CRTM05_1_0(feature));
+                return L.circleMarker(latlng, style_Giras_AccinSocial_4_0(feature));
             },
         });
-        var cluster_2015_CRTM05_1 = new L.MarkerClusterGroup({showCoverageOnHover: false,
-            spiderfyDistanceMultiplier: 2});
-        cluster_2015_CRTM05_1.addLayer(layer_2015_CRTM05_1);
+        bounds_group.addLayer(layer_Giras_AccinSocial_4);
+        map.addLayer(layer_Giras_AccinSocial_4);
+        function pop_Rutas_Investigacin_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Id_Objeto</th>\
+                        <td>' + (feature.properties['Id_Objeto'] !== null ? Autolinker.link(String(feature.properties['Id_Objeto'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Año</th>\
+                        <td>' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Docente</th>\
+                        <td>' + (feature.properties['Docente'] !== null ? Autolinker.link(String(feature.properties['Docente'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Unidad</th>\
+                        <td>' + (feature.properties['Unidad'] !== null ? Autolinker.link(String(feature.properties['Unidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Salida</th>\
+                        <td>' + (feature.properties['Salida'] !== null ? Autolinker.link(String(feature.properties['Salida'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Regreso</th>\
+                        <td>' + (feature.properties['Regreso'] !== null ? Autolinker.link(String(feature.properties['Regreso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Destino</th>\
+                        <td>' + (feature.properties['Destino'] !== null ? Autolinker.link(String(feature.properties['Destino'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_Personas</th>\
+                        <td>' + (feature.properties['N_Personas'] !== null ? Autolinker.link(String(feature.properties['N_Personas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? Autolinker.link(String(feature.properties['Tipo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Curso</th>\
+                        <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Km</th>\
+                        <td>' + (feature.properties['Km'] !== null ? Autolinker.link(String(feature.properties['Km'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-        bounds_group.addLayer(layer_2015_CRTM05_1);
-        cluster_2015_CRTM05_1.addTo(map);
-        function pop_UCR_CRTM05_2(feature, layer) {
+        function style_Rutas_Investigacin_5_0(feature) {
+            switch(String(feature.properties['Año'])) {
+                case '2016':
+                    return {
+                pane: 'pane_Rutas_Investigacin_5',
+                opacity: 1,
+                color: 'rgba(224,111,25,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2017':
+                    return {
+                pane: 'pane_Rutas_Investigacin_5',
+                opacity: 1,
+                color: 'rgba(242,125,191,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2018':
+                    return {
+                pane: 'pane_Rutas_Investigacin_5',
+                opacity: 1,
+                color: 'rgba(145,63,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2019':
+                    return {
+                pane: 'pane_Rutas_Investigacin_5',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Rutas_Investigacin_5');
+        map.getPane('pane_Rutas_Investigacin_5').style.zIndex = 405;
+        map.getPane('pane_Rutas_Investigacin_5').style['mix-blend-mode'] = 'normal';
+        var layer_Rutas_Investigacin_5 = new L.geoJson(json_Rutas_Investigacin_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rutas_Investigacin_5',
+            layerName: 'layer_Rutas_Investigacin_5',
+            pane: 'pane_Rutas_Investigacin_5',
+            onEachFeature: pop_Rutas_Investigacin_5,
+            style: style_Rutas_Investigacin_5_0,
+        });
+        bounds_group.addLayer(layer_Rutas_Investigacin_5);
+        map.addLayer(layer_Rutas_Investigacin_5);
+        function pop_Giras_Investigacin_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Id_Objeto</th>\
+                        <td>' + (feature.properties['Id_Objeto'] !== null ? Autolinker.link(String(feature.properties['Id_Objeto'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Año</th>\
+                        <td>' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Docente</th>\
+                        <td>' + (feature.properties['Docente'] !== null ? Autolinker.link(String(feature.properties['Docente'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Unidad</th>\
+                        <td>' + (feature.properties['Unidad'] !== null ? Autolinker.link(String(feature.properties['Unidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Salida</th>\
+                        <td>' + (feature.properties['Salida'] !== null ? Autolinker.link(String(feature.properties['Salida'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Regreso</th>\
+                        <td>' + (feature.properties['Regreso'] !== null ? Autolinker.link(String(feature.properties['Regreso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Destino</th>\
+                        <td>' + (feature.properties['Destino'] !== null ? Autolinker.link(String(feature.properties['Destino'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_Personas</th>\
+                        <td>' + (feature.properties['N_Personas'] !== null ? Autolinker.link(String(feature.properties['N_Personas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? Autolinker.link(String(feature.properties['Tipo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Curso</th>\
+                        <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Canton</th>\
+                        <td>' + (feature.properties['Canton'] !== null ? Autolinker.link(String(feature.properties['Canton'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Provincia</th>\
+                        <td>' + (feature.properties['Provincia'] !== null ? Autolinker.link(String(feature.properties['Provincia'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distrito</th>\
+                        <td>' + (feature.properties['Distrito'] !== null ? Autolinker.link(String(feature.properties['Distrito'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Giras_Investigacin_6_0() {
+            return {
+                pane: 'pane_Giras_Investigacin_6',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,160,44,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Giras_Investigacin_6');
+        map.getPane('pane_Giras_Investigacin_6').style.zIndex = 406;
+        map.getPane('pane_Giras_Investigacin_6').style['mix-blend-mode'] = 'normal';
+        var layer_Giras_Investigacin_6 = new L.geoJson(json_Giras_Investigacin_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Giras_Investigacin_6',
+            layerName: 'layer_Giras_Investigacin_6',
+            pane: 'pane_Giras_Investigacin_6',
+            onEachFeature: pop_Giras_Investigacin_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Giras_Investigacin_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Giras_Investigacin_6);
+        map.addLayer(layer_Giras_Investigacin_6);
+        function pop_Rutas_Docencia_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Id_Objeto</th>\
+                        <td>' + (feature.properties['Id_Objeto'] !== null ? Autolinker.link(String(feature.properties['Id_Objeto'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Año</th>\
+                        <td>' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Docente</th>\
+                        <td>' + (feature.properties['Docente'] !== null ? Autolinker.link(String(feature.properties['Docente'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Unidad</th>\
+                        <td>' + (feature.properties['Unidad'] !== null ? Autolinker.link(String(feature.properties['Unidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Salida</th>\
+                        <td>' + (feature.properties['Salida'] !== null ? Autolinker.link(String(feature.properties['Salida'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Regreso</th>\
+                        <td>' + (feature.properties['Regreso'] !== null ? Autolinker.link(String(feature.properties['Regreso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Destino</th>\
+                        <td>' + (feature.properties['Destino'] !== null ? Autolinker.link(String(feature.properties['Destino'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_Personas</th>\
+                        <td>' + (feature.properties['N_Personas'] !== null ? Autolinker.link(String(feature.properties['N_Personas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? Autolinker.link(String(feature.properties['Tipo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Curso</th>\
+                        <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Km</th>\
+                        <td>' + (feature.properties['Km'] !== null ? Autolinker.link(String(feature.properties['Km'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Rutas_Docencia_7_0(feature) {
+            switch(String(feature.properties['Año'])) {
+                case '2015':
+                    return {
+                pane: 'pane_Rutas_Docencia_7',
+                opacity: 1,
+                color: 'rgba(51,160,44,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2016':
+                    return {
+                pane: 'pane_Rutas_Docencia_7',
+                opacity: 1,
+                color: 'rgba(224,111,25,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2017':
+                    return {
+                pane: 'pane_Rutas_Docencia_7',
+                opacity: 1,
+                color: 'rgba(242,125,191,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2018':
+                    return {
+                pane: 'pane_Rutas_Docencia_7',
+                opacity: 1,
+                color: 'rgba(145,63,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2019':
+                    return {
+                pane: 'pane_Rutas_Docencia_7',
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Rutas_Docencia_7');
+        map.getPane('pane_Rutas_Docencia_7').style.zIndex = 407;
+        map.getPane('pane_Rutas_Docencia_7').style['mix-blend-mode'] = 'normal';
+        var layer_Rutas_Docencia_7 = new L.geoJson(json_Rutas_Docencia_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rutas_Docencia_7',
+            layerName: 'layer_Rutas_Docencia_7',
+            pane: 'pane_Rutas_Docencia_7',
+            onEachFeature: pop_Rutas_Docencia_7,
+            style: style_Rutas_Docencia_7_0,
+        });
+        bounds_group.addLayer(layer_Rutas_Docencia_7);
+        map.addLayer(layer_Rutas_Docencia_7);
+        function pop_Giras_Docencia_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">id</th>\
+                        <td>' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Id_Objeto</th>\
+                        <td>' + (feature.properties['Id_Objeto'] !== null ? Autolinker.link(String(feature.properties['Id_Objeto'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Año</th>\
+                        <td>' + (feature.properties['Año'] !== null ? Autolinker.link(String(feature.properties['Año'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Docente</th>\
+                        <td>' + (feature.properties['Docente'] !== null ? Autolinker.link(String(feature.properties['Docente'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Unidad</th>\
+                        <td>' + (feature.properties['Unidad'] !== null ? Autolinker.link(String(feature.properties['Unidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Salida</th>\
+                        <td>' + (feature.properties['Salida'] !== null ? Autolinker.link(String(feature.properties['Salida'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Regreso</th>\
+                        <td>' + (feature.properties['Regreso'] !== null ? Autolinker.link(String(feature.properties['Regreso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Destino</th>\
+                        <td>' + (feature.properties['Destino'] !== null ? Autolinker.link(String(feature.properties['Destino'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">N_Personas</th>\
+                        <td>' + (feature.properties['N_Personas'] !== null ? Autolinker.link(String(feature.properties['N_Personas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Tipo</th>\
+                        <td>' + (feature.properties['Tipo'] !== null ? Autolinker.link(String(feature.properties['Tipo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Curso</th>\
+                        <td>' + (feature.properties['Curso'] !== null ? Autolinker.link(String(feature.properties['Curso'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Vehículo</th>\
+                        <td>' + (feature.properties['Vehículo'] !== null ? Autolinker.link(String(feature.properties['Vehículo'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Canton</th>\
+                        <td>' + (feature.properties['Canton'] !== null ? Autolinker.link(String(feature.properties['Canton'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Provincia</th>\
+                        <td>' + (feature.properties['Provincia'] !== null ? Autolinker.link(String(feature.properties['Provincia'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distrito</th>\
+                        <td>' + (feature.properties['Distrito'] !== null ? Autolinker.link(String(feature.properties['Distrito'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Giras_Docencia_8_0() {
+            return {
+                pane: 'pane_Giras_Docencia_8',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(65,173,231,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Giras_Docencia_8');
+        map.getPane('pane_Giras_Docencia_8').style.zIndex = 408;
+        map.getPane('pane_Giras_Docencia_8').style['mix-blend-mode'] = 'normal';
+        var layer_Giras_Docencia_8 = new L.geoJson(json_Giras_Docencia_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Giras_Docencia_8',
+            layerName: 'layer_Giras_Docencia_8',
+            pane: 'pane_Giras_Docencia_8',
+            onEachFeature: pop_Giras_Docencia_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Giras_Docencia_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Giras_Docencia_8);
+        map.addLayer(layer_Giras_Docencia_8);
+        function pop_UCR_9(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     for (i in e.target._eventParents) {
@@ -198,46 +846,54 @@
                         <th scope="row">Descripcio</th>\
                         <td>' + (feature.properties['Descripcio'] !== null ? Autolinker.link(String(feature.properties['Descripcio'])) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <th scope="row">Sede</th>\
+                        <td>' + (feature.properties['Sede'] !== null ? Autolinker.link(String(feature.properties['Sede'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Finca</th>\
+                        <td>' + (feature.properties['Finca'] !== null ? Autolinker.link(String(feature.properties['Finca'])) : '') + '</td>\
+                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_UCR_CRTM05_2_0() {
+        function style_UCR_9_0() {
             return {
-                pane: 'pane_UCR_CRTM05_2',
+                pane: 'pane_UCR_9',
                 radius: 12.0,
                 opacity: 1,
-                color: 'rgba(50,87,128,1.0)',
+                color: 'rgba(65,173,231,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 2.0,
+                weight: 1,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(65,173,231,1.0)',
                 interactive: true,
             }
         }
-        map.createPane('pane_UCR_CRTM05_2');
-        map.getPane('pane_UCR_CRTM05_2').style.zIndex = 402;
-        map.getPane('pane_UCR_CRTM05_2').style['mix-blend-mode'] = 'normal';
-        var layer_UCR_CRTM05_2 = new L.geoJson(json_UCR_CRTM05_2, {
+        map.createPane('pane_UCR_9');
+        map.getPane('pane_UCR_9').style.zIndex = 409;
+        map.getPane('pane_UCR_9').style['mix-blend-mode'] = 'normal';
+        var layer_UCR_9 = new L.geoJson(json_UCR_9, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_UCR_CRTM05_2',
-            layerName: 'layer_UCR_CRTM05_2',
-            pane: 'pane_UCR_CRTM05_2',
-            onEachFeature: pop_UCR_CRTM05_2,
+            dataVar: 'json_UCR_9',
+            layerName: 'layer_UCR_9',
+            pane: 'pane_UCR_9',
+            onEachFeature: pop_UCR_9,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_UCR_CRTM05_2_0(feature));
+                return L.circleMarker(latlng, style_UCR_9_0(feature));
             },
         });
-        bounds_group.addLayer(layer_UCR_CRTM05_2);
-        map.addLayer(layer_UCR_CRTM05_2);
+        bounds_group.addLayer(layer_UCR_9);
+        map.addLayer(layer_UCR_9);
             var title = new L.Control();
             title.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'info');
@@ -280,43 +936,30 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/UCR_CRTM05_2.png" /> UCR_CRTM05': layer_UCR_CRTM05_2,'<img src="legend/2015_CRTM05_1.png" /> 2015_CRTM05': cluster_2015_CRTM05_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/UCR_9.png" /> UCR': layer_UCR_9,'<img src="legend/Giras_Docencia_8.png" /> Giras_Docencia': layer_Giras_Docencia_8,'Rutas_Docencia<br /><table><tr><td style="text-align: center;"><img src="legend/Rutas_Docencia_7_20150.png" /></td><td>2015</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Docencia_7_20161.png" /></td><td>2016</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Docencia_7_20172.png" /></td><td>2017</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Docencia_7_20183.png" /></td><td>2018</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Docencia_7_20194.png" /></td><td>2019</td></tr></table>': layer_Rutas_Docencia_7,'<img src="legend/Giras_Investigacin_6.png" /> Giras_Investigación': layer_Giras_Investigacin_6,'Rutas_Investigación<br /><table><tr><td style="text-align: center;"><img src="legend/Rutas_Investigacin_5_20160.png" /></td><td>2016</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Investigacin_5_20171.png" /></td><td>2017</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Investigacin_5_20182.png" /></td><td>2018</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_Investigacin_5_20193.png" /></td><td>2019</td></tr></table>': layer_Rutas_Investigacin_5,'<img src="legend/Giras_AccinSocial_4.png" /> Giras_AcciónSocial': layer_Giras_AccinSocial_4,'Rutas_AcciónSocial<br /><table><tr><td style="text-align: center;"><img src="legend/Rutas_AccinSocial_3_20180.png" /></td><td>2018</td></tr><tr><td style="text-align: center;"><img src="legend/Rutas_AccinSocial_3_20191.png" /></td><td>2019</td></tr></table>': layer_Rutas_AccinSocial_3,"OSM Standard": layer_OSMStandard_2,"Google Road": layer_GoogleRoad_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);L.control.scale({position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}).addTo(map);
         setBounds();
         var i = 0;
-        layer_2015_CRTM05_1.eachLayer(function(layer) {
+        layer_UCR_9.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['id'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['id']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_2015_CRTM05_1'});
+            layer.bindTooltip((layer.feature.properties['Descripcio'] !== null?String('<div style="color: #ffffff; font-size: 6pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Descripcio']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_UCR_9'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        var i = 0;
-        layer_UCR_CRTM05_2.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['Descripcio'] !== null?String('<div style="color: #ffffff; font-size: 6pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Descripcio']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_UCR_CRTM05_2'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        resetLabels([layer_2015_CRTM05_1,layer_UCR_CRTM05_2]);
+        resetLabels([layer_UCR_9]);
         map.on("zoomend", function(){
-            resetLabels([layer_2015_CRTM05_1,layer_UCR_CRTM05_2]);
+            resetLabels([layer_UCR_9]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_2015_CRTM05_1,layer_UCR_CRTM05_2]);
+            resetLabels([layer_UCR_9]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_2015_CRTM05_1,layer_UCR_CRTM05_2]);
+            resetLabels([layer_UCR_9]);
         });
         </script>
     </body>
